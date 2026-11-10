@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sistema de Estacionamento</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f1f5f9;
+            margin: 0;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: auto;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px #0001;
+        }
+
+        h1 {
+            color: #1e293b;
+        }
+
+        .botao {
+            display: inline-block;
+            padding: 10px 15px;
+            color: white;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 13px;
+            margin: 2px;
+        }
+
+        .novo {
+            background: #2563eb;
+            margin-bottom: 20px;
+        }
+
+        .editar {
+            background: #e59b14;
+        }
+
+        .excluir {
+            background: #dc2626;
+        }
+
+        .saida {
+            background: #16a34a;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 13px;
+            border-bottom: 1px solid #ddd;
+            text-align: center;
+        }
+
+        th {
+            background: #1e293b;
+            color: white;
+        }
+
+        tr:hover {
+            background: #f8fafc;
+        }
+
+        .ocupado {
+            color: #16a34a;
+            font-weight: bold;
+        }
+
+        .finalizado {
+            color: #dc2626;
+            font-weight: bold;
+        }
+
+        .acoes {
+            white-space: nowrap;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>🚗 Sistema de Estacionamento</h1>
+
+    <p>Gerenciamento de veículos estacionados.</p>
+
+    <a href="/veiculos/novo" class="botao novo">
+        + Cadastrar Veículo
+    </a>
+
+    <table>
+
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Placa</th>
+            <th>Modelo</th>
+            <th>Cor</th>
+            <th>Vaga</th>
+            <th>Entrada</th>
+            <th>Saída</th>
+            <th>Valor</th>
+            <th>Status</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        <tr th:each="veiculo : ${veiculos}">
+
+            <td th:text="${veiculo.id}"></td>
+
+            <td th:text="${veiculo.placa}"></td>
+
+            <td th:text="${veiculo.modelo}"></td>
+
+            <td th:text="${veiculo.cor}"></td>
+
+            <td th:text="${veiculo.vaga}"></td>
+
+            <td th:text="${veiculo.entrada}"></td>
+
+            <td th:text="${veiculo.saida != null ? veiculo.saida : '-'}"></td>
+
+            <td th:text="${'R$ ' + veiculo.valor}"></td>
+
+            <td>
+                <span th:if="${veiculo.saida == null}"
+                      class="ocupado">
+                    Estacionado
+                </span>
+
+                <span th:unless="${veiculo.saida == null}"
+                      class="finalizado">
+                    Finalizado
+                </span>
+            </td>
+
+            <td class="acoes">
+
+                <a th:href="@{/veiculos/editar/{id}(id=${veiculo.id})}"
+                   class="botao editar">
+                    Editar
+                </a>
+
+                <form th:if="${veiculo.saida == null}"
+                      th:action="@{/veiculos/saida/{id}(id=${veiculo.id})}"
+                      method="post"
+                      style="display:inline">
+
+                    <button type="submit" class="botao saida">
+                        Registrar saída
+                    </button>
+
+                </form>
+
+                <form th:action="@{/veiculos/excluir/{id}(id=${veiculo.id})}"
+                      method="post"
+                      style="display:inline"
+                      onsubmit="return confirm('Deseja realmente excluir este veículo?')">
+
+                    <button type="submit" class="botao excluir">
+                        Excluir
+                    </button>
+
+                </form>
+
+            </td>
+
+        </tr>
+
+        <tr th:if="${#lists.isEmpty(veiculos)}">
+            <td colspan="10">
+                Nenhum veículo cadastrado.
+            </td>
+        </tr>
+
+        </tbody>
+
+    </table>
+
+</div>
+
+</body>
+</html>

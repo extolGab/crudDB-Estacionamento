@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Cadastro de Veículos</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f1f5f9;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px #0001;
+        }
+
+        h1 {
+            color: #1e293b;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 11px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            background: #2563eb;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            width: 100%;
+            margin-top: 20px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        .voltar {
+            display: block;
+            margin-top: 20px;
+            text-align: center;
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1 th:text="${veiculo != null ? 'Editar Veículo' : 'Cadastrar Veículo'}">
+        Cadastro de Veículo
+    </h1>
+
+    <form th:if="${veiculo == null}"
+          action="/veiculos/salvar"
+          method="post">
+
+        <label>Placa:</label>
+        <input type="text"
+               name="placa"
+               placeholder="ABC1234"
+               maxlength="7"
+               required>
+
+        <label>Modelo:</label>
+        <input type="text"
+               name="modelo"
+               placeholder="Ex: Honda Civic"
+               required>
+
+        <label>Cor:</label>
+        <input type="text"
+               name="cor"
+               placeholder="Ex: Preto"
+               required>
+
+        <label>Vaga:</label>
+        <input type="text"
+               name="vaga"
+               placeholder="Ex: A01"
+               required>
+
+        <button type="submit">
+            Cadastrar Veículo
+        </button>
+
+    </form>
+
+    <form th:if="${veiculo != null}"
+          th:action="@{/veiculos/atualizar/{id}(id=${veiculo.id})}"
+          method="post">
+
+        <label>Placa:</label>
+        <input type="text"
+               name="placa"
+               th:value="${veiculo.placa}"
+               maxlength="7"
+               required>
+
+        <label>Modelo:</label>
+        <input type="text"
+               name="modelo"
+               th:value="${veiculo.modelo}"
+               required>
+
+        <label>Cor:</label>
+        <input type="text"
+               name="cor"
+               th:value="${veiculo.cor}"
+               required>
+
+        <label>Vaga:</label>
+        <input type="text"
+               name="vaga"
+               th:value="${veiculo.vaga}"
+               required>
+
+        <button type="submit">
+            Atualizar Veículo
+        </button>
+
+    </form>
+
+    <a href="/veiculos" class="voltar">
+        Voltar para a listagem
+    </a>
+
+</div>
+
+</body>
+</html>
