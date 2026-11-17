@@ -1,0 +1,89 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Assinantes</title>
+</head>
+
+<body>
+
+<h1>Cadastro de Assinantes</h1>
+
+<a th:href="@{/assinantes/novo}">
+    Novo Assinante
+</a>
+
+<br><br>
+
+<table border="1" cellpadding="10">
+
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Email</th>
+        <th>Telefone</th>
+        <th>CPF</th>
+        <th>Plano</th>
+        <th>Valor</th>
+        <th>Início</th>
+        <th>Fim</th>
+        <th>Status</th>
+        <th>Ações</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+    <tr th:each="a : ${assinantes}">
+
+        <td th:text="${a.get('id')}"></td>
+        <td th:text="${a.get('nome')}"></td>
+        <td th:text="${a.get('email')}"></td>
+        <td th:text="${a.get('telefone')}"></td>
+        <td th:text="${a.get('cpf')}"></td>
+        <td th:text="${a.get('plano')}"></td>
+        <td th:text="${a.get('valor')}"></td>
+        <td th:text="${a.get('data_inicio')}"></td>
+        <td th:text="${a.get('data_fim')}"></td>
+        <td th:text="${a.get('status')}"></td>
+
+        <td>
+
+            <a th:href="@{/assinantes/editar/{id}(id=${a.get('id')})}">
+                Editar
+            </a>
+
+            <form th:action="@{/assinantes/excluir/{id}(id=${a.get('id')})}"
+                  method="post"
+                  style="display:inline">
+
+                <button type="submit"
+                        onclick="return confirm('Deseja realmente excluir este assinante?')">
+                    Excluir
+                </button>
+
+            </form>
+
+        </td>
+
+    </tr>
+
+    <tr th:if="${#lists.isEmpty(assinantes)}">
+        <td colspan="11">
+            Nenhum assinante cadastrado.
+        </td>
+    </tr>
+
+    </tbody>
+
+</table>
+
+<br>
+
+<a th:href="@{/}">Voltar ao início</a>
+
+</body>
+</html>

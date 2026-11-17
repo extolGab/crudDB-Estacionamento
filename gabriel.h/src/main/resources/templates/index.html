@@ -1,0 +1,156 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Painel Principal</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f1f5f9;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 25px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #1e293b;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .descricao {
+            color: #64748b;
+            margin-bottom: 40px;
+        }
+
+        .sistemas {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 35px 20px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px #0001;
+            text-decoration: none;
+            color: #1e293b;
+            transition: 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 8px 20px #0002;
+        }
+
+        .icone {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .card h2 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .veiculos {
+            border-top: 5px solid #2563eb;
+        }
+
+        .produtos {
+            border-top: 5px solid #16a34a;
+        }
+
+        .assinantes {
+            border-top: 5px solid #9333ea;
+        }
+
+        @media (max-width: 700px) {
+            .sistemas {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>🏢 Painel de Sistemas</h1>
+
+    <p class="descricao">
+        Bem-vindo! Selecione abaixo o sistema que deseja acessar.
+    </p>
+
+    <div class="sistemas">
+
+        <a th:href="@{/veiculos}" class="card veiculos">
+
+            <div class="icone">🚗</div>
+
+            <h2>Sistema de Veículos</h2>
+
+            <p>
+                Gerenciamento de estacionamento,
+                veículos e registros de entrada e saída.
+            </p>
+
+        </a>
+
+        <a th:href="@{/produtos}" class="card produtos">
+
+            <div class="icone">📦</div>
+
+            <h2>Sistema de Produtos</h2>
+
+            <p>
+                Controle de estoque, produtos,
+                categorias e disponibilidade.
+            </p>
+
+        </a>
+
+        <a th:href="@{/assinantes}" class="card assinantes">
+
+            <div class="icone">👥</div>
+
+            <h2>Sistema de Assinantes</h2>
+
+            <p>
+                Cadastro e gerenciamento
+                de assinantes e planos.
+            </p>
+
+        </a>
+
+    </div>
+
+</div>
+
+</body>
+</html>

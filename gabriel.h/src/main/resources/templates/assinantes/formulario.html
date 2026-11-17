@@ -1,0 +1,127 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro de Assinante</title>
+</head>
+
+<body>
+
+<h1 th:text="${assinante == null ? 'Novo Assinante' : 'Editar Assinante'}">
+    Cadastro de Assinante
+</h1>
+
+<form method="post"
+      th:action="${assinante == null}
+          ? @{/assinantes/salvar}
+          : @{/assinantes/atualizar/{id}(id=${assinante.get('id')})}">
+
+    <label>Nome:</label>
+    <input type="text"
+           name="nome"
+           th:value="${assinante != null ? assinante.get('nome') : ''}"
+           required>
+
+    <br><br>
+
+    <label>Email:</label>
+    <input type="email"
+           name="email"
+           th:value="${assinante != null ? assinante.get('email') : ''}"
+           required>
+
+    <br><br>
+
+    <label>Telefone:</label>
+    <input type="text"
+           name="telefone"
+           th:value="${assinante != null ? assinante.get('telefone') : ''}">
+
+    <br><br>
+
+    <label>CPF:</label>
+    <input type="text"
+           name="cpf"
+           th:value="${assinante != null ? assinante.get('cpf') : ''}">
+
+    <br><br>
+
+    <label>Plano:</label>
+    <select name="plano" required>
+
+        <option value="BASICO"
+                th:selected="${assinante != null and assinante.get('plano') == 'BASICO'}">
+            Básico
+        </option>
+
+        <option value="PREMIUM"
+                th:selected="${assinante != null and assinante.get('plano') == 'PREMIUM'}">
+            Premium
+        </option>
+
+        <option value="VIP"
+                th:selected="${assinante != null and assinante.get('plano') == 'VIP'}">
+            VIP
+        </option>
+
+    </select>
+
+    <br><br>
+
+    <label>Valor:</label>
+    <input type="number"
+           name="valor"
+           step="0.01"
+           min="0"
+           th:value="${assinante != null ? assinante.get('valor') : 0}"
+           required>
+
+    <br><br>
+
+    <label>Data de início:</label>
+    <input type="date"
+           name="dataInicio"
+           th:value="${assinante != null ? assinante.get('data_inicio') : ''}"
+           required>
+
+    <br><br>
+
+    <label>Data de fim:</label>
+    <input type="date"
+           name="dataFim"
+           th:value="${assinante != null ? assinante.get('data_fim') : ''}">
+
+    <br><br>
+
+    <label>Status:</label>
+    <select name="status" required>
+
+        <option value="ATIVO"
+                th:selected="${assinante == null or assinante.get('status') == 'ATIVO'}">
+            Ativo
+        </option>
+
+        <option value="CANCELADO"
+                th:selected="${assinante != null and assinante.get('status') == 'CANCELADO'}">
+            Cancelado
+        </option>
+
+        <option value="PENDENTE"
+                th:selected="${assinante != null and assinante.get('status') == 'PENDENTE'}">
+            Pendente
+        </option>
+
+    </select>
+
+    <br><br>
+
+    <button type="submit">Salvar</button>
+
+    <a th:href="@{/assinantes}">Cancelar</a>
+
+</form>
+
+</body>
+</html>

@@ -1,0 +1,109 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Controle de Produtos</title>
+</head>
+
+<body>
+
+<h1>Controle de Estoque</h1>
+
+<a th:href="@{/produtos/novo}">
+    Novo Produto
+</a>
+
+|
+
+<a th:href="@{/produtos}">
+    Todos os Produtos
+</a>
+
+|
+
+<a th:href="@{/produtos/estoque-baixo}">
+    Estoque Baixo
+</a>
+
+<br><br>
+
+<table border="1" cellpadding="10">
+
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Categoria</th>
+        <th>Código</th>
+        <th>Quantidade</th>
+        <th>Estoque Mínimo</th>
+        <th>Preço</th>
+        <th>Situação</th>
+        <th>Ações</th>
+    </tr>
+    </thead>
+
+    <tbody>
+
+    <tr th:each="p : ${produtos}">
+
+        <td th:text="${p.get('id')}"></td>
+        <td th:text="${p.get('nome')}"></td>
+        <td th:text="${p.get('categoria')}"></td>
+        <td th:text="${p.get('codigo')}"></td>
+        <td th:text="${p.get('quantidade')}"></td>
+        <td th:text="${p.get('estoque_minimo')}"></td>
+
+        <td th:text="${p.get('preco')}"></td>
+
+        <td>
+                    <span th:if="${p.get('quantidade') <= p.get('estoque_minimo')}"
+                          style="color:red">
+                        Estoque baixo
+                    </span>
+
+            <span th:unless="${p.get('quantidade') <= p.get('estoque_minimo')}"
+                  style="color:green">
+                        Disponível
+                    </span>
+        </td>
+
+        <td>
+
+            <a th:href="@{/produtos/editar/{id}(id=${p.get('id')})}">
+                Editar
+            </a>
+
+            <form th:action="@{/produtos/excluir/{id}(id=${p.get('id')})}"
+                  method="post"
+                  style="display:inline">
+
+                <button type="submit"
+                        onclick="return confirm('Deseja excluir este produto?')">
+                    Excluir
+                </button>
+
+            </form>
+
+        </td>
+
+    </tr>
+
+    <tr th:if="${#lists.isEmpty(produtos)}">
+        <td colspan="9">
+            Nenhum produto encontrado.
+        </td>
+    </tr>
+
+    </tbody>
+
+</table>
+
+<br>
+
+<a th:href="@{/}">Voltar ao início</a>
+
+</body>
+</html>

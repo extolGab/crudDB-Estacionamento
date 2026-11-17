@@ -40,6 +40,36 @@ public class DataInitializer {
                             ")"
             );
 
+            Base.exec(
+                    "CREATE TABLE IF NOT EXISTS assinantes (" +
+                            "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                            "nome TEXT NOT NULL, " +
+                            "email TEXT NOT NULL, " +
+                            "telefone TEXT, " +
+                            "cpf TEXT, " +
+                            "plano TEXT NOT NULL, " +
+                            "valor REAL NOT NULL, " +
+                            "data_inicio TEXT NOT NULL, " +
+                            "data_fim TEXT, " +
+                            "status TEXT NOT NULL DEFAULT 'ATIVO', " +
+                            "data_cadastro TEXT DEFAULT CURRENT_TIMESTAMP" +
+                            ")"
+            );
+
+            Base.exec(
+                    "CREATE TABLE IF NOT EXISTS produtos (" +
+                            "id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                            "nome TEXT NOT NULL, " +
+                            "descricao TEXT, " +
+                            "categoria TEXT NOT NULL, " +
+                            "codigo TEXT NOT NULL UNIQUE, " +
+                            "quantidade INTEGER NOT NULL DEFAULT 0, " +
+                            "estoque_minimo INTEGER NOT NULL DEFAULT 5, " +
+                            "preco REAL NOT NULL, " +
+                            "data_cadastro TEXT DEFAULT CURRENT_TIMESTAMP" +
+                            ")"
+            );
+
             System.out.println("Banco SQLite inicializado!");
             System.out.println("Tabela veiculos criada/verificada!");
 
